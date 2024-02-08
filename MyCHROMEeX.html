@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style contenteditable="true">
+        body{
+            margin: 0;
+            padding: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+     input{
+        padding: 5px 10px;
+        width: 300px;
+        box-sizing: border-box;
+        outline: none;
+
+     }
+   button{
+    background-color: rgb(41, 126, 41);
+    color: white;
+    font-weight: 700;
+    border: 0;
+    border-radius: 3px;
+    padding: 0.5rem 1.3rem;
+   }
+
+ ul{
+    display: flex;
+    flex-direction: column;
+ }
+ li{
+
+    list-style: none;
+ }
+li a {
+    color: rgb(41, 126, 41); 
+}
+
+
+[id="btn-del"]{
+    background-color: white;
+    border: 1px solid rgb(41, 126, 41);
+    color: rgb(41, 126, 41);
+}
+
+    </style>
+</head>
+<body>
+    <input type="text"  id="input-el">
+    <button id="save-btn">SAVE INPUT</button>
+    <button id="btn-del">DELETE</button>
+    <button id="tab-btn">SAVE TAB</button>
+    <ul id="ul-el"></ul>
+
+<script>
+    let myLead = [];
+    const inputEl = document.getElementById('input-el');
+    const ulEl = document.getElementById('ul-el');
+    let fromLocalStrorage = JSON.parse(localStorage.getItem('mylead'));
+  
+     //event listener on the del btn
+     const deleteBtnEl = document.getElementById('btn-del').addEventListener('dblclick',() =>{
+       
+       localStorage.clear();
+       myLead  = [];
+     
+     })
+
+    const tabs = [
+   {url:"wwww.github.com.za"}
+
+     ]
+     let tabeButtonEl = document.querySelector('#tab-btn').addEventListener('click', () =>{
+      console.log(tabs[0] .url)
+     })
+
+if(fromLocalStrorage){
+  myLead = fromLocalStrorage;///checking the local storage before rendering 
+    renderLeads(myLead);
+
+}
+
+
+    //eventlister button clicks
+    const btnSave = document.getElementById('save-btn').addEventListener('click',function(){
+      myLead.push(inputEl.value);
+      inputEl.value = "";
+      renderLeads(myLead);
+     localStorage.setItem("mylead", JSON.stringify(myLead));
+     
+  
+})
+
+function renderLeads(leads){
+    //looping throughthe array and render the data inside the array to the DOM
+    inputEl.value ="";
+    for(let i =0; i < myLead.length;i++){
+   //ulEl.innerHTML +=  "<li>" + myLead[i]  + "</li>"
+   const li = document.createElement('li');
+   const a = document.createElement('a');
+   a.textContent = myLead[i];
+   a.href =  `${myLead}`;
+ 
+    li.appendChild(a)
+
+   ulEl.appendChild(li);
+
+
+ }
+
+}
+</script>
+
+
+
+</body>
+</html>
